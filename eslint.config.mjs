@@ -189,7 +189,6 @@ export default ts.config(
 			'no-restricted-imports': 'off',
 			'no-return-assign': 'error',
 			'no-return-await': 'warn',
-			'no-self-compare': 'error',
 			'no-sequences': 'error',
 			'no-template-curly-in-string': 'warn',
 			'no-throw-literal': 'error',

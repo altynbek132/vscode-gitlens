@@ -77,7 +77,7 @@ export class ProvidersApi {
 	) {
 		const proxyAgent = getProxyAgent();
 		const userAgent = `${
-			container.debugging ? 'GitLens-Debug' : container.prerelease ? 'GitLens-Pre' : 'GitLens'
+			1 === 1 ? 'GitLens-Debug' : container.prerelease ? 'GitLens-Pre' : 'GitLens'
 		}/${container.version} (${env.appName}/${codeVersion}; ${getPlatform()})`;
 		const customFetch: ProviderRequestFunction = async <T>({
 			url,

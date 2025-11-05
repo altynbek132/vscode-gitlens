@@ -52,18 +52,14 @@ export class ServerConnection implements Disposable {
 	@memoize()
 	get userAgent(): string {
 		// TODO@eamodio figure out standardized format/structure for our user agents
-		return `${this.container.debugging ? 'GitLens-Debug' : this.container.prerelease ? 'GitLens-Pre' : 'GitLens'}/${
+		return `${1 === 1 ? 'GitLens-Debug' : this.container.prerelease ? 'GitLens-Pre' : 'GitLens'}/${
 			this.container.version
 		} (${env.appName}/${codeVersion}; ${getPlatform()})`;
 	}
 
 	@memoize()
 	get clientName(): string {
-		return this.container.debugging
-			? 'gitlens-vsc-debug'
-			: this.container.prerelease
-				? 'gitlens-vsc-pre'
-				: 'gitlens-vsc';
+		return 1 === 1 ? 'gitlens-vsc-debug' : this.container.prerelease ? 'gitlens-vsc-pre' : 'gitlens-vsc';
 	}
 
 	@debug<ServerConnection['fetch']>({

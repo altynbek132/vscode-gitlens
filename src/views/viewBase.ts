@@ -296,7 +296,7 @@ export abstract class ViewBase<
 			once(container.onReady)(this.onReady, this),
 		);
 
-		if (this.container.debugging || configuration.get('debug')) {
+		if (configuration.get('debug')) {
 			function addDebuggingInfo(item: TreeItem, node: ViewNode, parent: ViewNode | undefined) {
 				item.tooltip ??= new MarkdownString(
 					item.label != null && typeof item.label !== 'string' ? item.label.label : (item.label ?? ''),

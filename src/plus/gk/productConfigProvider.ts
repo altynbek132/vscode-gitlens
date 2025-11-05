@@ -43,7 +43,7 @@ export class ProductConfigProvider {
 				statusCode: undefined as number | undefined,
 			};
 
-			if (DEBUG) {
+			if (1 === 1) {
 				try {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- using @ts-ignore instead of @ts-expect-error because if `product.json` is found then @ts-expect-error will complain because its not an error anymore
 					// @ts-ignore

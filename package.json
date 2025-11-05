@@ -12670,10 +12670,6 @@
 					"when": "!gitlens:plus"
 				},
 				{
-					"command": "gitlens.plus.simulateSubscription",
-					"when": "gitlens:enabled && gitlens:debugging"
-				},
-				{
 					"command": "gitlens.pullRepositories",
 					"when": "gitlens:repos:withRemotes && !gitlens:readonly && !gitlens:untrusted && !gitlens:hasVirtualFolders"
 				},

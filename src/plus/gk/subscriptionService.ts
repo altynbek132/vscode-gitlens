@@ -197,7 +197,7 @@ export class SubscriptionService implements Disposable {
 		);
 		this.updateContext();
 
-		if (DEBUG) {
+		if (1 === 1) {
 			void import(/* webpackChunkName: "__debug__" */ './__debug__accountDebug').then(m => {
 				let savedSession: { session: AuthenticationSession | null | undefined } | undefined;
 

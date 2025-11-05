@@ -111,7 +111,7 @@ export class TelemetryService implements Disposable {
 				vscodeVersion: codeVersion,
 			},
 			getProxyAgent(),
-			container.debugging,
+			1 === 1,
 		);
 
 		if (this.eventQueue.length) {

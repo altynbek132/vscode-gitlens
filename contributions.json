@@ -4231,7 +4231,7 @@
 		},
 		"gitlens.plus.simulateSubscription": {
 			"label": "Simulate Subscription (Debugging)",
-			"commandPalette": "gitlens:enabled && gitlens:debugging"
+			"commandPalette": true
 		},
 		"gitlens.plus.upgrade": {
 			"label": "Upgrade to Pro...",

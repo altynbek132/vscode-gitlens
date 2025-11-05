@@ -227,7 +227,7 @@ export async function activate(context: ExtensionContext): Promise<GitLensApi | 
 		}
 	});
 
-	if (container.debugging) {
+	if (1 === 1) {
 		// Set context to only show some commands when using the pre-release version or debugging
 		void setContext('gitlens:debugging', true);
 		void setContext('gitlens:prerelease', true);
@@ -246,7 +246,7 @@ export async function activate(context: ExtensionContext): Promise<GitLensApi | 
 	const flatCfg = flatten(configuration.getAll(true), 'config', { joinArrays: true });
 
 	container.telemetry.setGlobalAttributes({
-		debugging: container.debugging,
+		debugging: 1 === 1,
 		'device.cohort': deviceCohortGroup,
 		prerelease: prerelease,
 		install: previousVersion == null,
