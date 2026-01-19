@@ -73,6 +73,14 @@ class AccountDebug {
 		this.container.context.subscriptions.push(
 			registerCommand('gitlens.plus.simulateSubscription', () => this.showSimulator()),
 		);
+
+		void this.startSimulation(
+			{
+				label: 'Pro',
+				item: { state: SubscriptionState.Paid, planId: 'pro' },
+			} as SimulateQuickPickItem,
+			true,
+		);
 	}
 
 	// Show a quickpick to select a subscription state to simulate
@@ -289,11 +297,13 @@ class AccountDebug {
 		this.service.changeSubscription(this.service.getStoredSubscription(), undefined, { store: false });
 	}
 
-	private async startSimulation(pick: SimulateQuickPickItem | undefined): Promise<boolean> {
+	private async startSimulation(pick: SimulateQuickPickItem | undefined, silent?: boolean): Promise<boolean> {
 		this.simulatingPick = pick;
-		if (pick?.item == null) return true;
-		const { item } = pick;
-		if (item.state == null) {
+		return this.simulate(pick?.item, silent);
+	}
+
+	private async simulate(item: SimulateQuickPickItem['item'] | undefined, silent?: boolean): Promise<boolean> {
+		if (item?.state == null) {
 			this.endSimulation();
 			return true;
 		}
@@ -319,7 +329,9 @@ class AccountDebug {
 
 		const subscription = this.service.getStoredSubscription();
 		if (subscription?.account == null) {
-			void window.showErrorMessage("Can't simulate state, without an account");
+			if (!silent) {
+				void window.showErrorMessage("Can't simulate state, without an account");
+			}
 
 			this.endSimulation();
 			return true;
