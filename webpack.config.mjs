@@ -287,6 +287,9 @@ function getExtensionConfig(target, mode, env) {
 									implementation: esbuild,
 									target: ['es2023', 'chrome124', 'node20.14.0'],
 									tsconfig: tsConfigPath,
+									define: {
+										DEBUG: JSON.stringify(mode === 'development'),
+									},
 								},
 							}
 						: {
