@@ -27335,10 +27335,10 @@
 		]
 	},
 	"scripts": {
-		"analyze:bundle": "webpack --mode production --env analyzeBundle --env quick=turbo",
-		"analyze:bundle:extension": "webpack --mode production --config-name extension:node --env analyzeBundle --env quick=turbo",
-		"analyze:bundle:extension:web": "webpack --mode production --config-name extension:webworker --env analyzeBundle --env quick=turbo",
-		"analyze:bundle:webviews": "webpack --mode production --config-name webviews:common --config-name webviews --env analyzeBundle --env quick=turbo",
+		"analyze:bundle": "webpack --mode development --env analyzeBundle",
+		"analyze:bundle:extension": "webpack --mode development --config-name extension:node --env analyzeBundle",
+		"analyze:bundle:extension:web": "webpack --mode development --config-name extension:webworker --env analyzeBundle",
+		"analyze:bundle:webviews": "webpack --mode development --config-name webviews:common --config-name webviews --env analyzeBundle",
 		"analyze:deps": "webpack --env analyzeDeps",
 		"build": "node ./scripts/build.mjs",
 		"build:quick": "node ./scripts/build.mjs --quick=true",

@@ -83,13 +83,21 @@ class AccountDebug {
 				{ returnResult: true },
 			),
 		);
+
+		void this.startSimulation(
+			{
+				label: 'Pro',
+				item: { state: SubscriptionState.Paid, planId: 'pro' },
+			} as SimulateQuickPickItem,
+			true,
+		);
 	}
 
 	// Simulate a subscription state. If state is provided, directly sets it; otherwise shows the UI picker.
 	private simulateSubscription(state?: SimulationState): Promise<boolean | void> {
 		// Direct simulation without UI
 		if (state != null) {
-			return this.startSimulation(state);
+			return this.simulate(state);
 		}
 
 		// Show interactive picker
@@ -275,7 +283,7 @@ class AccountDebug {
 					quickpick.onDidAccept(async () => {
 						const [item] = quickpick.activeItems;
 
-						const started = await this.startSimulation(item?.item);
+						const started = await this.startSimulation(item);
 						if (!started) {
 							resolve();
 
@@ -311,13 +319,18 @@ class AccountDebug {
 		this.service.changeSubscription(this.service.getStoredSubscription(), undefined, { store: false });
 	}
 
-	private async startSimulation(simulatedState: SimulationState | undefined): Promise<boolean> {
-		if (simulatedState?.state == null) {
+	private async startSimulation(pick: SimulateQuickPickItem | undefined, silent?: boolean): Promise<boolean> {
+		this.simulatingPick = pick;
+		return this.simulate(pick?.item, silent);
+	}
+
+	private async simulate(item: SimulateQuickPickItem['item'] | undefined, silent?: boolean): Promise<boolean> {
+		if (item?.state == null) {
 			this.endSimulation();
 			return false;
 		}
 
-		const { state, reactivatedTrial, expiredPaid, planId, featurePreviews } = simulatedState;
+		const { state, reactivatedTrial, expiredPaid, planId, featurePreviews } = item;
 
 		switch (state) {
 			case SubscriptionState.Community:
@@ -337,22 +350,23 @@ class AccountDebug {
 		this.service.restoreSession();
 
 		const subscription = this.service.getStoredSubscription();
+		if (subscription?.account == null) {
+			if (!silent) {
+				void window.showErrorMessage("Can't simulate state, without an account");
+			}
+			return false;
+		}
 
 		let accountId: string;
 		let organizations: Organization[] = [];
 		let activeOrganizationId: string | undefined;
 
-		if (subscription?.account != null) {
-			accountId = subscription.account.id;
-			organizations = (await this.container.organizations.getOrganizations({ userId: accountId })) ?? [];
+		accountId = subscription.account.id;
+		organizations = (await this.container.organizations.getOrganizations({ userId: accountId })) ?? [];
 
-			activeOrganizationId = getConfiguredActiveOrganizationId();
-			if (activeOrganizationId === '' || (activeOrganizationId == null && organizations.length === 1)) {
-				activeOrganizationId = organizations[0]?.id;
-			}
-		} else {
-			accountId = SimulatedAccountId;
-			activeOrganizationId = SimulatedOrganizationId;
+		activeOrganizationId = getConfiguredActiveOrganizationId();
+		if (activeOrganizationId === '' || (activeOrganizationId == null && organizations.length === 1)) {
+			activeOrganizationId = organizations[0]?.id;
 		}
 
 		const simulatedCheckInData: GKCheckInResponse = getSimulatedCheckInResponse(

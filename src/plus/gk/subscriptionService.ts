@@ -197,6 +197,7 @@ export class SubscriptionService implements Disposable {
 		);
 		this.updateContext();
 
+		void setContext('gitlens:debugging', true);
 		if (DEBUG) {
 			void import(/* webpackChunkName: "__debug__" */ './__debug__accountDebug.js').then(m => {
 				let savedSession: { session: AuthenticationSession | null | undefined } | undefined;
