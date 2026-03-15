@@ -12,8 +12,8 @@ import type { SubscriptionService } from './subscriptionService.js';
 import { getConfiguredActiveOrganizationId } from './utils/-webview/subscription.utils.js';
 import { getSubscriptionFromCheckIn } from './utils/checkin.utils.js';
 
-const SimulatedAccountId = '0000000000000-0000-0000-000000000000';
-const SimulatedOrganizationId = '000000000000000000000000';
+// const SimulatedAccountId = '0000000000000-0000-0000-000000000000';
+// const SimulatedOrganizationId = '000000000000000000000000';
 
 type SubscriptionServiceFacade = {
 	getSubscription: () => SubscriptionService['_subscription'];
@@ -357,14 +357,10 @@ class AccountDebug {
 			return false;
 		}
 
-		let accountId: string;
-		let organizations: Organization[] = [];
-		let activeOrganizationId: string | undefined;
+		const accountId = subscription.account.id;
+		const organizations = (await this.container.organizations.getOrganizations({ userId: accountId })) ?? [];
 
-		accountId = subscription.account.id;
-		organizations = (await this.container.organizations.getOrganizations({ userId: accountId })) ?? [];
-
-		activeOrganizationId = getConfiguredActiveOrganizationId();
+		let activeOrganizationId = getConfiguredActiveOrganizationId();
 		if (activeOrganizationId === '' || (activeOrganizationId == null && organizations.length === 1)) {
 			activeOrganizationId = organizations[0]?.id;
 		}
